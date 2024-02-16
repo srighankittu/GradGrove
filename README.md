@@ -33,8 +33,8 @@ Before cloning/forking this project, make sure you have the following tools inst
 
 ## Installation
 
-1. Fork the project!
-2. Clone the project!
+1. Fork the project
+2. Clone the project
 3. Follow the instructions in the console:
 4. Navigate to the project directory cd sos-animals
 5. Install the dependencies npm install

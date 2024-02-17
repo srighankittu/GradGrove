@@ -3,7 +3,7 @@ import "./App.css";
 function App() {
   return (
     <>
-      <div>Grad Grove!</div>
+      <div>Grad Grove initial build!!</div>
     </>
   );
 }

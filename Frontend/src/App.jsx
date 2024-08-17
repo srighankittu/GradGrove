@@ -1,10 +1,13 @@
 import "./App.css";
-import Signup from "./components/Signup";
+import HomePage from "./components/Header";
+import Footer from "./components/Footer";
+
 
 function App() {
   return (
     <>
-      <Signup />
+    <HomePage/>
+    <Footer/>
     </>
   );
 }

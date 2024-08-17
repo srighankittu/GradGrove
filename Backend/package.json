@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "description": "gradgrove backend",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "npm run test"
+    "test": "npm run test",
+    "start": "nodemon index.js"
   },
   "author": "Srighan Vedere",
   "license": "ISC",
@@ -13,6 +15,7 @@
     "express": "^4.19.2",
     "helmet": "^7.1.0",
     "mailer": "^0.6.7",
+    "mongoose": "^8.5.3",
     "nodemon": "^3.1.0"
   }
 }

@@ -1,7 +1,9 @@
 import "./App.css";
-import HomePage from "./components/Header";
+
 import Footer from "./components/Footer";
 import i18n from './components/I18n'; // Import your i18n config
+import Header from "./components/Header";
+import Body from "./components/Body";
 
 
 
@@ -11,8 +13,15 @@ function App() {
 
   return (
     <>
-    <HomePage/>
-    <Footer/>
+    <div className="min-h-screen bg-white">
+     <Header/>
+     <div style={{marginTop:"-50%"}}>
+     <Body/>
+     </div>
+     <Footer/>
+    </div>
+    
+   
     </>
   );
 }

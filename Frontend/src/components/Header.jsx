@@ -24,16 +24,13 @@ const HomePage = () => {
   useEffect(() => {
     StudentData();
     TeacherData();
-  click()
+
   }, []);
 
   const changeLanguage = (lng) => {
     i18n.changeLanguage(lng);
   };
-  const click=(start)=>{
-    console.log(start)
 
-  }
 
   return (
     <div className="min-h-screen bg-white">
@@ -92,7 +89,7 @@ const HomePage = () => {
                 <li>{t( 'student_feature3')}</li>
                 <li>{t( 'student_feature4')}</li>
               </ul>
-              <button className="text-white px-6 py-2 rounded-lg mt-4 studentButton" onClick={()=>click("start")}>
+              <button className="text-white px-6 py-2 rounded-lg mt-4 studentButton">
                 {t('start_adventure')}
               </button>
               <div className="mt-4 flex justify-center space-x-4">

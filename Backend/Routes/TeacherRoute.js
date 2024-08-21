@@ -1,10 +1,7 @@
 import express from "express";
 import TeacherLandingSchema from "../Schema/TeacherLandingPage.js";
-import TeacherData from "../Data/TeacherData.js";
 
 const TeacherRoute = express.Router();
-
-
 
 TeacherRoute.get("/getTeacher", async (req, res) => {
   try {

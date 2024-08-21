@@ -1,10 +1,7 @@
 import express from "express";
 import StudentLandingSchema from "../Schema/StudentLandingPage.js";
-import StudentData from "../Data/StudentData.js";
-import { message } from "antd";
 
 const StudentRoute = express.Router();
-
 
 StudentRoute.get("/getStudent", async (req, res) => {
   try {

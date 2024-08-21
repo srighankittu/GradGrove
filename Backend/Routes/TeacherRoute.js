@@ -4,18 +4,7 @@ import TeacherData from "../Data/TeacherData.js";
 
 const TeacherRoute = express.Router();
 
-TeacherRoute.post("/teacher", async (req, res) => {
-  try {
-    const data = await TeacherLandingSchema.insertMany(TeacherData);
-    res.send({
-      message: "studentdata posted successfully",
-      data: data,
-      status: 200,
-    });
-  } catch (err) {
-    console.log(err, "error posting the details");
-  }
-});
+
 
 TeacherRoute.get("/getTeacher", async (req, res) => {
   try {

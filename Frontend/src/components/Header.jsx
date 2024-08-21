@@ -1,7 +1,4 @@
-
-
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 
 import { useTranslation } from "react-i18next";
 
@@ -18,11 +15,21 @@ const Header = () => {
           <img src="public/logo.svg" className="mainImage" />
 
           <nav className="space-x-6">
-            <a href="#" className="text-gray-800">{t('about_us')}</a>
-            <a href="#" className="text-gray-800">{t('our_work')}</a>
-            <a href="#" className="text-gray-800">{t('news')}</a>
-            <a href="#" className="text-gray-800">{t('resources')}</a>
-            <a href="#" className="text-gray-800">{t('events')}</a>
+            <a href="#" className="text-gray-800">
+              {t("about_us")}
+            </a>
+            <a href="#" className="text-gray-800">
+              {t("our_work")}
+            </a>
+            <a href="#" className="text-gray-800">
+              {t("news")}
+            </a>
+            <a href="#" className="text-gray-800">
+              {t("resources")}
+            </a>
+            <a href="#" className="text-gray-800">
+              {t("events")}
+            </a>
           </nav>
 
           <div>
@@ -40,16 +47,12 @@ const Header = () => {
             className="text-white px-4 py-2 rounded-lg"
             style={{ backgroundColor: "rgb(0,118,129)" }}
           >
-            {t('login_join_free')}
+            {t("login_join_free")}
           </button>
         </div>
       </header>
-
-    
     </div>
   );
 };
 
 export default Header;
-
-

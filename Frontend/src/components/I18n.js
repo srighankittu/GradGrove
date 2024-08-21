@@ -117,14 +117,14 @@ const resources = {
   };
 
 i18n
-  .use(HttpApi) // Load translations using HTTP
-  .use(LanguageDetector) // Detects the user language
-  .use(initReactI18next) // Passes i18n instance to react-i18next
+  .use(HttpApi) 
+  .use(LanguageDetector)
+  .use(initReactI18next) 
   .init({
     resources,
-    fallbackLng: 'en', // Default language if the user's language isn't found
+    fallbackLng: 'en', 
     interpolation: {
-      escapeValue: false, // React already does escaping
+      escapeValue: false, 
     },
     detection: {
       order: ['path', 'cookie', 'htmlTag', 'localStorage', 'subdomain'],

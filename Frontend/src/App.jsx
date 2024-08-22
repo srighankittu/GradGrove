@@ -8,7 +8,7 @@ function App() {
     <>
       <div className="min-h-screen bg-white">
         <Header />
-        <div className="body">
+        <div className="mt-[-50%]">
           <Body />
         </div>
         <Footer />

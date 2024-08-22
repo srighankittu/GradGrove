@@ -31,7 +31,6 @@ const Header = () => {
               {t("events")}
             </a>
           </nav>
-
           <div>
             <select
               className="border border-gray-300 rounded p-2"

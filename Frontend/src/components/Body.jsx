@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
-
 const Body = () => {
   const { t, i18n } = useTranslation();
 
@@ -12,18 +11,13 @@ const Body = () => {
   const [teacherData, setTeacherData] = useState([]);
 
   const StudentData = async () => {
-    const student = await axios.get(
-      import.meta.env.VITE_STUDENT_API_URL
-    );
+    const student = await axios.get(import.meta.env.VITE_STUDENT_API_URL);
     setStudentData(student.data.data);
     console.log(student.data.data);
   };
 
   const TeacherData = async () => {
-    const teacher = await axios.get(
-      import.meta.env.VITE_TEACHER_API_URL
-
-    );
+    const teacher = await axios.get(import.meta.env.VITE_TEACHER_API_URL);
     setTeacherData(teacher.data.data);
     console.log(teacher.data.data);
   };

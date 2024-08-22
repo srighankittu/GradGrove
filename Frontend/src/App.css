@@ -98,3 +98,6 @@ p {
 .text-sm {
   color: rgb(215, 218, 218);
 }
+.body{
+  margin-top: -50%;
+}

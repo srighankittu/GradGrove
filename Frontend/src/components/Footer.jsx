@@ -126,7 +126,6 @@ function Footer() {
                   </li>
                 </ul>
               </div>
-
               <div
                 className="flex flex-col items-center md:items-start space-y-4"
                 style={{ marginRight: "10%" }}

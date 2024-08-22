@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
+
 const Body = () => {
   const { t, i18n } = useTranslation();
 
@@ -11,13 +12,18 @@ const Body = () => {
   const [teacherData, setTeacherData] = useState([]);
 
   const StudentData = async () => {
-    const student = await axios.get("http://localhost:3005/api/getStudent");
+    const student = await axios.get(
+      import.meta.env.VITE_STUDENT_API_URL
+    );
     setStudentData(student.data.data);
     console.log(student.data.data);
   };
 
   const TeacherData = async () => {
-    const teacher = await axios.get("http://localhost:3005/api/getTeacher");
+    const teacher = await axios.get(
+      import.meta.env.VITE_TEACHER_API_URL
+
+    );
     setTeacherData(teacher.data.data);
     console.log(teacher.data.data);
   };
@@ -39,11 +45,10 @@ const Body = () => {
                 </span>
               </div>
               <img
-                src="public/student-platform.svg"
+                src="src/images/student-platform.svg"
                 alt="For Students"
                 className="w-full h-48 object-cover mb-4"
               />
-
               <h2 className="studentTitle">{t("student_title")}</h2>
               <p className="studentDescription">{t("student_description")}</p>
               <ul className="list-disc pl-6 text-gray-700 mb-4 studentFeatures">
@@ -69,7 +74,6 @@ const Body = () => {
               </div>
             </div>
           ))}
-
           {teacherData.map((item, id) => (
             <div key={id} className="p-6 bg-white">
               <div className="mb-4">
@@ -78,7 +82,7 @@ const Body = () => {
                 </span>
               </div>
               <img
-                src="public/teacher-platform.svg"
+                src="src/images/teacher-platform.svg"
                 alt="For Teachers"
                 className="w-full h-48 object-cover mb-4"
               />

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-
 const LandingPageSchema1 = mongoose.Schema({
   Title: { type: String },
   Description: { type: String },
@@ -8,6 +7,5 @@ const LandingPageSchema1 = mongoose.Schema({
   Feature3: { type: String },
   Feature4: { type: String },
 });
-
 const TeacherLandingSchema = mongoose.model("teacherData", LandingPageSchema1);
 export default TeacherLandingSchema;

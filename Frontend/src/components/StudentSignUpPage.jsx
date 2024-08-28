@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
@@ -31,28 +31,28 @@ const SignUpPage = () => {
   const handleNameChange = (e) => {
     const name = e.target.value;
     setName(name);
-    setNameError(validateName(name));
+    validateName(name);
   };
 
   const handlePhoneNumber = (e) => {
     const number = e.target.value;
     setPhoneNumber(number);
-    setPhoneNumberError(validatePhoneNumber(number));
+    validatePhoneNumber(number);
   };
 
   const handleEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-    setEmailError(validateEmail(email));
+    validateEmail(email);
   };
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    setPasswordError(validatePassword(newPassword));
+    validatePassword(newPassword);
   };
 
-  const handleDobChange = (e) => {
+  const HandleDobChange = (e) => {
     const birthDetails = e.target.value;
     setDob(birthDetails);
 
@@ -63,18 +63,7 @@ const SignUpPage = () => {
   const postSignUpDetails = async (e) => {
     e.preventDefault();
 
-    if (
-      !nameError &&
-      !phoneNumberError &&
-      !emailError &&
-      !passwordError &&
-      name &&
-      dob &&
-      gender &&
-      fieldStudy &&
-      email &&
-      password
-    ) {
+    if (name && dob && gender && fieldStudy && email && password) {
       const hashedPassword = await bcrypt.hash(password, 10);
       const details = await axios.post(VITE_POST_STUDENT_SIGNUP_DETAILS, {
         name,
@@ -86,7 +75,6 @@ const SignUpPage = () => {
         email,
         password: hashedPassword,
       });
-      console.log(details);
 
       const token = await axios.get(VITE_GET_STUDENT_SIGNUP_TOKEN);
       console.log(token.data);
@@ -155,7 +143,7 @@ const SignUpPage = () => {
               id="dob"
               className="form-input w-full p-2 border border-gray-300 rounded textColor"
               value={dob}
-              onChange={handleDobChange}
+              onChange={HandleDobChange}
               required
             />
           </div>

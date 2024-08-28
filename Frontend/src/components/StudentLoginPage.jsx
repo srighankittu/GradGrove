@@ -31,13 +31,13 @@ const StudentLogin = () => {
     e.preventDefault();
 
     const hashedPassword = await bcrypt.hash(Password, 10);
-    await axios.post(VITE_STUDENT_LOGIN_DETAILS_URL, {
+    await axios.post(import.meta.env.VITE_STUDENT_LOGIN_DETAILS_URL, {
       Email,
       Password: hashedPassword,
     });
 
     const studentSignUpDetails = await axios.get(
-      VITE_GET_STUDENT_SIGNUP_DETAILS_URL
+      import.meta.env.VITE_GET_STUDENT_SIGNUP_DETAILS_URL
     );
     const studentEmail = await studentSignUpDetails.data.find(
       (item) => item.Email == Email
@@ -54,7 +54,7 @@ const StudentLogin = () => {
       setDisplayError("Enter the Registered Email and Correct Password ");
     }
 
-    const token = await axios.get(VITE_GET_STUDENT_LOGIN_TOKEN_URL);
+    const token = await axios.get(import.meta.env.VITE_GET_STUDENT_LOGIN_TOKEN_URL);
 
     if (token) {
       Cookies.set("studentLoginToken", token.data);

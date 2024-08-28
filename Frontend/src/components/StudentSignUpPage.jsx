@@ -65,7 +65,7 @@ const SignUpPage = () => {
 
     if (name && dob && gender && fieldStudy && email && password) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const details = await axios.post(VITE_POST_STUDENT_SIGNUP_DETAILS, {
+      const details = await axios.post(import.meta.env.VITE_POST_STUDENT_SIGNUP_DETAILS, {
         name,
         dob,
         age,
@@ -76,7 +76,7 @@ const SignUpPage = () => {
         password: hashedPassword,
       });
 
-      const token = await axios.get(VITE_GET_STUDENT_SIGNUP_TOKEN);
+      const token = await axios.get(import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN);
       console.log(token.data);
       if (token) {
         Cookies.set("token", token.data, { expires: 7 });

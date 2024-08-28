@@ -10,7 +10,7 @@ TeacherRoute.get("/getTeacher", async (req, res) => {
       status: 200,
     });
   } catch (err) {
-    console.log(err, "error recieving the details");
+    res.send("error occurred",err)
   }
 });
 export default TeacherRoute;

@@ -13,25 +13,15 @@ StudentRoute.get("/getStudent", async (req, res) => {
       status: 200,
     });
   } catch (err) {
-    console.log(err, "error recieving the details");
+    res.send(err, "error occurred");
   }
 });
 StudentRoute.post("/studentSignUpDetails", async (req, res) => {
   try {
     const { name, dob, age, gender, fieldStudy, phoneNumber, email, password } =
       req.body;
-    console.log(
-      name,
-      dob,
-      age,
-      gender,
-      fieldStudy,
-      phoneNumber,
-      email,
-      password,
-      "namaste"
-    );
-    const details = new StudentSignUpDetails({
+
+    const StudentSignUpdetails = new StudentSignUpDetails({
       Name: name,
       DOB: dob,
       Age: age,
@@ -41,34 +31,32 @@ StudentRoute.post("/studentSignUpDetails", async (req, res) => {
       Email: email,
       Password: password,
     });
-    const details2 = await details.save();
+    const studentSignUpDetailsPosting = await StudentSignUpdetails.save();
     res.send({
       message: "student signup details posted successfully",
-      data: details2,
+      data: studentSignUpDetailsPosting,
       status: 200,
     });
-    console.log(details2);
+
     StudentRoute.get("/getToken", async (req, res) => {
       const token = jwt.sign({ userId: details2._id }, "my secret key");
-      console.log(token);
       res.send(token);
     });
   } catch (err) {
-    console.log(err, "error occurred");
+    res.send(err, "error occurred");
   }
 });
 StudentRoute.post("/studentLoginDetails", async (req, res) => {
   const { Email, Password } = req.body;
-  console.log(Email, Password);
 
-  const details = new StudentLoginSchema({
+  const studentLoginDetails = new StudentLoginSchema({
     Email: Email,
     Password: Password,
   });
-  const details1 = await details.save();
+  const studentLoginDetailsPosting = await studentLoginDetails.save();
   res.send({
     message: "studentlogin details posted successfully",
-    data: details1,
+    data: studentLoginDetailsPosting,
     status: 200,
   });
   StudentRoute.get("/getStudentLoginToken", async (req, res) => {
@@ -77,8 +65,8 @@ StudentRoute.post("/studentLoginDetails", async (req, res) => {
   });
 });
 StudentRoute.get("/studentSignUpDetails", async (req, res) => {
-  const details = await StudentSignUpDetails.find();
-  res.send(details);
+  const studentSignupdetails = await StudentSignUpDetails.find();
+  res.send(studentSignupdetails);
 });
 
 export default StudentRoute;

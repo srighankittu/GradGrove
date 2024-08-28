@@ -1,8 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import {
+  validateName,
+  validatePhoneNumber,
+  validateEmail,
+  validatePassword,
+} from "./utils/SignUpValidation";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
@@ -25,68 +31,28 @@ const SignUpPage = () => {
   const handleNameChange = (e) => {
     const name = e.target.value;
     setName(name);
-    validateName(name);
-  };
-
-  const validateName = (name) => {
-    const regex = /^[A-Za-z\s]+$/;
-    if (!regex.test(name)) {
-      setNameError("Name must only contain alphabetic characters and spaces.");
-    } else {
-      setNameError("");
-    }
+    setNameError(validateName(name));
   };
 
   const handlePhoneNumber = (e) => {
     const number = e.target.value;
     setPhoneNumber(number);
-    validatePhoneNumber(number);
-  };
-
-  const validatePhoneNumber = (number) => {
-    const regex = /^\d{10}$/;
-    if (!regex.test(number)) {
-      setPhoneNumberError("Phone number must be exactly 10 digits.");
-    } else {
-      setPhoneNumberError("");
-    }
+    setPhoneNumberError(validatePhoneNumber(number));
   };
 
   const handleEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-    validateEmail(email);
-  };
-
-  const validateEmail = (email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-    if (!regex.test(email)) {
-      setEmailError("Please enter a valid email address.");
-    } else {
-      setEmailError("");
-    }
+    setEmailError(validateEmail(email));
   };
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    validatePassword(newPassword);
+    setPasswordError(validatePassword(newPassword));
   };
 
-  const validatePassword = (password) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-    if (!regex.test(password)) {
-      setPasswordError(
-        "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character."
-      );
-    } else {
-      setPasswordError("");
-    }
-  };
-
-  const HandleDobChange = (e) => {
+  const handleDobChange = (e) => {
     const birthDetails = e.target.value;
     setDob(birthDetails);
 
@@ -97,24 +63,32 @@ const SignUpPage = () => {
   const postSignUpDetails = async (e) => {
     e.preventDefault();
 
-    if (name && dob && gender && fieldStudy && email && password) {
+    if (
+      !nameError &&
+      !phoneNumberError &&
+      !emailError &&
+      !passwordError &&
+      name &&
+      dob &&
+      gender &&
+      fieldStudy &&
+      email &&
+      password
+    ) {
       const hashedPassword = await bcrypt.hash(password, 10);
-      const details = await axios.post(
-        "http://localhost:3005/api/studentSignUpDetails",
-        {
-          name,
-          dob,
-          age,
-          gender,
-          fieldStudy,
-          phoneNumber,
-          email,
-          password: hashedPassword,
-        }
-      );
+      const details = await axios.post(VITE_POST_STUDENT_SIGNUP_DETAILS, {
+        name,
+        dob,
+        age,
+        gender,
+        fieldStudy,
+        phoneNumber,
+        email,
+        password: hashedPassword,
+      });
       console.log(details);
 
-      const token = await axios.get("http://localhost:3005/api/getToken");
+      const token = await axios.get(VITE_GET_STUDENT_SIGNUP_TOKEN);
       console.log(token.data);
       if (token) {
         Cookies.set("token", token.data, { expires: 7 });
@@ -181,7 +155,7 @@ const SignUpPage = () => {
               id="dob"
               className="form-input w-full p-2 border border-gray-300 rounded textColor"
               value={dob}
-              onChange={HandleDobChange}
+              onChange={handleDobChange}
               required
             />
           </div>

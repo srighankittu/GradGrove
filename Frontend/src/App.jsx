@@ -1,5 +1,5 @@
 import "./App.css";
-import i18n from "./components/I18n";
+import i18n from "./utils/I18n"
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./components/LandingPage";
 import SignUpPage from "./components/StudentSignUpPage";

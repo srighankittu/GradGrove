@@ -49,15 +49,13 @@ const StudentLogin = () => {
         navigate("/studentDashBoard");
       } else {
         setDisplayEmailError("Enter the Registered Email");
-        console.log(displayEmailError);
       }
     } else {
       setDisplayError("Enter the Registered Email and Correct Password ");
-      console.log(displayEmailError);
     }
 
     const token = await axios.get(VITE_GET_STUDENT_LOGIN_TOKEN_URL);
-    console.log(token);
+
     if (token) {
       Cookies.set("studentLoginToken", token.data);
     }

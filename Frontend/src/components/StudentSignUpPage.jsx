@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import axios from "axios";
-import bcrypt from "bcryptjs";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 import {
@@ -9,6 +8,7 @@ import {
   validateEmail,
   validatePassword,
 } from "./utils/SignUpValidation";
+import { hashPassword } from "./utils/hashingUtils";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
@@ -64,25 +64,32 @@ const SignUpPage = () => {
     e.preventDefault();
 
     if (name && dob && gender && fieldStudy && email && password) {
-      const hashedPassword = await bcrypt.hash(password, 10);
-      const details = await axios.post(import.meta.env.VITE_POST_STUDENT_SIGNUP_DETAILS, {
-        name,
-        dob,
-        age,
-        gender,
-        fieldStudy,
-        phoneNumber,
-        email,
-        password: hashedPassword,
-      });
+      try {
+        const hashedPassword = await hashPassword(password);
 
-      const token = await axios.get(import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN);
-      console.log(token.data);
-      if (token) {
-        Cookies.set("token", token.data, { expires: 7 });
-        console.log("Token stored in cookies:", token.data);
-      } else {
-        console.log("Error occurred in storing the token");
+        const details = await axios.post(
+          import.meta.env.VITE_POST_STUDENT_SIGNUP_DETAILS,
+          {
+            name,
+            dob,
+            age,
+            gender,
+            fieldStudy,
+            phoneNumber,
+            email,
+            password: hashedPassword,
+          }
+        );
+
+        const token = await axios.get(
+          import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN
+        );
+
+        if (token) {
+          Cookies.set("token", token.data, { expires: 7 });
+        }
+      } catch (error) {
+        console.error("Sign up failed:", error);
       }
     }
   };

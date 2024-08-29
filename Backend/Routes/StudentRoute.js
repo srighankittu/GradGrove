@@ -39,7 +39,7 @@ StudentRoute.post("/studentSignUpDetails", async (req, res) => {
     });
 
     StudentRoute.get("/getToken", async (req, res) => {
-      const token = jwt.sign({ userId: details2._id }, "my secret key");
+      const token = jwt.sign({ userId: studentSignUpDetailsPosting._id }, "my secret key");
       res.send(token);
     });
   } catch (err) {
@@ -60,7 +60,7 @@ StudentRoute.post("/studentLoginDetails", async (req, res) => {
     status: 200,
   });
   StudentRoute.get("/getStudentLoginToken", async (req, res) => {
-    const token = jwt.sign({ userId: details1._id }, "my secret key");
+    const token = jwt.sign({ userId: studentLoginDetailsPosting._id }, "my secret key");
     res.send(token);
   });
 });

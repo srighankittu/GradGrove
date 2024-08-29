@@ -3,8 +3,9 @@ import { useState } from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
 import Cookies from "js-cookie";
+import { validateEmail, validatePassword } from "../utils/SignInValidation";
+import useFetch from "../../hooks/useFetchToken";
 
 const StudentLogin = () => {
   const [Email, setEmail] = useState("");
@@ -16,20 +17,20 @@ const StudentLogin = () => {
   const [displayEmailError, setDisplayEmailError] = useState("");
   const [displayError, setDisplayError] = useState("");
 
-  const studentSignUpDetails = useFetchToken(
+  const studentSignUpDetails = useFetch(
     import.meta.env.VITE_GET_STUDENT_SIGNUP_DETAILS_URL
   );
 
   const handleEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-    validateEmail(email);
+    setEmailError(validateEmail(email));
   };
 
   const handlePassword = (e) => {
     const password = e.target.value;
     setPassword(password);
-    validatePassword(password);
+    setPasswordError(validatePassword(password));
   };
 
   const studentLoginDetailsPost = async (e) => {
@@ -41,7 +42,7 @@ const StudentLogin = () => {
       Password: hashedPassword,
     });
 
-    const studentMatchedEmail = await studentSignUpDetails.find(
+    const studentMatchedEmail = await studentSignUpDetails?.data?.find(
       (item) => item.Email == Email
     );
 
@@ -66,28 +67,6 @@ const StudentLogin = () => {
 
     if (token) {
       Cookies.set("studentLoginToken", token.data);
-    }
-  };
-
-  const validateEmail = (Email) => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!regex.test(Email)) {
-      setEmailError("Please enter a valid email address");
-    } else {
-      setEmailError("");
-    }
-  };
-
-  const validatePassword = (password) => {
-    const regex =
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-
-    if (!regex.test(password)) {
-      setPasswordError(
-        "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character."
-      );
-    } else {
-      setPasswordError("");
     }
   };
 

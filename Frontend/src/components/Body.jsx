@@ -6,9 +6,22 @@ import useFetch from "../../hooks/useFetch";
 const Body = () => {
   const { t, i18n } = useTranslation();
 
-  const studentData = useFetch(import.meta.env.VITE_STUDENT_API_URL);
-  const teacherData = useFetch(import.meta.env.VITE_TEACHER_API_URL);
+  const studentDetails = useFetch(import.meta.env.VITE_STUDENT_API_URL);
+  const teacherDetails = useFetch(import.meta.env.VITE_TEACHER_API_URL);
+
+  const [studentData, setStudentData] = useState(null);
+  const [teacherData, setTeacherData] = useState(null);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (studentDetails != undefined) {
+      setStudentData(studentDetails?.data?.data);
+    }
+    if (teacherDetails != undefined) {
+      setTeacherData(teacherDetails?.data?.data);
+    }
+  }, [studentDetails, teacherDetails]);
 
   return (
     <div className="bodyarea">

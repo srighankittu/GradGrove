@@ -9,7 +9,7 @@ const useFetch = (api) => {
 
     const apiData=async()=>{
         const apiDetails = await axios.get(api)
-        setData(apiDetails.data.data)
+        setData(apiDetails)
     }
 
     React.useEffect(()=>{

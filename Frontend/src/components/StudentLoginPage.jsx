@@ -5,7 +5,6 @@ import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import useFetch2 from "../../hooks/useFetchToken";
 
 const StudentLogin = () => {
   const [Email, setEmail] = useState("");
@@ -42,14 +41,14 @@ const StudentLogin = () => {
       Password: hashedPassword,
     });
 
-    const details2 = await studentSignUpDetails.find(
+    const studentMatchedEmail = await studentSignUpDetails.find(
       (item) => item.Email == Email
     );
 
-    setData(details2);
+    setData(studentMatchedEmail);
 
-    if (details2) {
-      const data = await bcrypt.compare(Password, details2.Password);
+    if (studentMatchedEmail) {
+      const data = await bcrypt.compare(Password, studentMatchedEmail.Password);
       if (data) {
         navigate("/studentDashBoard");
       } else {

@@ -7,8 +7,8 @@ import {
   validatePhoneNumber,
   validateEmail,
   validatePassword,
-} from "./utils/SignUpValidation";
-import { hashPassword } from "./utils/hashingUtils";
+} from "../utils/SignUpValidation";
+import { hashPassword } from "../utils/hashingUtility";
 
 const SignUpPage = () => {
   const [name, setName] = useState("");
@@ -28,32 +28,28 @@ const SignUpPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
-  const studentSignUpToken = useFetchToken(
-    import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN
-  );
-
   const handleNameChange = (e) => {
     const name = e.target.value;
     setName(name);
-    validateName(name);
+    setNameError(validateName(name));
   };
 
   const handlePhoneNumber = (e) => {
     const number = e.target.value;
     setPhoneNumber(number);
-    validatePhoneNumber(number);
+    setPhoneNumberError(validatePhoneNumber(number));
   };
 
   const handleEmail = (e) => {
     const email = e.target.value;
     setEmail(email);
-    validateEmail(email);
+    setEmailError(validateEmail(email));
   };
 
   const handlePasswordChange = (e) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    validatePassword(newPassword);
+    setPasswordError(validatePassword(newPassword));
   };
 
   const HandleDobChange = (e) => {
@@ -85,8 +81,12 @@ const SignUpPage = () => {
           }
         );
 
-        if (studentSignUpToken) {
-          Cookies.set("token", studentSignUpToken);
+        const token = await axios.get(
+          import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN
+        );
+
+        if (token) {
+          Cookies.set("token", token.data);
         }
       } catch (error) {}
     }

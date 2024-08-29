@@ -5,7 +5,7 @@ import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
 import { validateEmail, validatePassword } from "../utils/SignInValidation";
-import useFetch from "../../hooks/useFetchToken";
+import useFetch from "../../hooks/useFetch";
 
 const StudentLogin = () => {
   const [Email, setEmail] = useState("");

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+
 const LandingPageSchema1 = mongoose.Schema({
   Title: { type: String },
   Description: { type: String },

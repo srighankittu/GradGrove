@@ -28,6 +28,10 @@ const SignUpPage = () => {
   const [passwordError, setPasswordError] = useState("");
   const navigate = useNavigate();
 
+  const studentSignUpToken = useFetchToken(
+    import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN
+  );
+
   const handleNameChange = (e) => {
     const name = e.target.value;
     setName(name);
@@ -81,16 +85,10 @@ const SignUpPage = () => {
           }
         );
 
-        const token = await axios.get(
-          import.meta.env.VITE_GET_STUDENT_SIGNUP_TOKEN
-        );
-
-        if (token) {
-          Cookies.set("token", token.data, { expires: 7 });
+        if (studentSignUpToken) {
+          Cookies.set("token", studentSignUpToken);
         }
-      } catch (error) {
-        console.error("Sign up failed:", error);
-      }
+      } catch (error) {}
     }
   };
 

@@ -3,6 +3,7 @@ import StudentLandingSchema from "../Schema/StudentLandingPage.js";
 import StudentSignUpDetails from "../Schema/StudentSignUpDetails.js";
 import jwt from "jsonwebtoken";
 import StudentLoginSchema from "../Schema/StudentLoginSchema.js";
+
 const StudentRoute = express.Router();
 StudentRoute.get("/getStudent", async (req, res) => {
   try {
@@ -20,7 +21,6 @@ StudentRoute.post("/studentSignUpDetails", async (req, res) => {
   try {
     const { name, dob, age, gender, fieldStudy, phoneNumber, email, password } =
       req.body;
-
     const StudentSignUpdetails = new StudentSignUpDetails({
       Name: name,
       DOB: dob,

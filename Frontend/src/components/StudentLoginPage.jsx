@@ -3,17 +3,23 @@ import { useState } from "react";
 import axios from "axios";
 import bcrypt from "bcryptjs";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import Cookies from "js-cookie";
-import { validateEmail, validatePassword } from "../utils/SignInValidation";
+import useFetch2 from "../../hooks/useFetchToken";
 
 const StudentLogin = () => {
   const [Email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
   const [Password, setPassword] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [data, setData] = useState({});
   const navigate = useNavigate();
   const [displayEmailError, setDisplayEmailError] = useState("");
   const [displayError, setDisplayError] = useState("");
+
+  const studentSignUpDetails = useFetchToken(
+    import.meta.env.VITE_GET_STUDENT_SIGNUP_DETAILS_URL
+  );
 
   const handleEmail = (e) => {
     const email = e.target.value;
@@ -31,33 +37,58 @@ const StudentLogin = () => {
     e.preventDefault();
 
     const hashedPassword = await bcrypt.hash(Password, 10);
-    await axios.post(import.meta.env.VITE_STUDENT_LOGIN_DETAILS_URL, {
+    await axios.post(import.meta.env.VITE_POST_STUDENT_LOGIN_DETAILS_URL, {
       Email,
       Password: hashedPassword,
     });
 
-    const studentSignUpDetails = await axios.get(
-      import.meta.env.VITE_GET_STUDENT_SIGNUP_DETAILS_URL
-    );
-    const studentEmail = await studentSignUpDetails.data.find(
+    const details2 = await studentSignUpDetails.find(
       (item) => item.Email == Email
     );
 
-    if (studentEmail) {
-      const data = await bcrypt.compare(Password, studentEmail.Password);
+    setData(details2);
+
+    if (details2) {
+      const data = await bcrypt.compare(Password, details2.Password);
       if (data) {
         navigate("/studentDashBoard");
       } else {
-        setDisplayEmailError("Enter the Registered Email");
+        setDisplayEmailError("Enter the Correct Password");
+        console.log(displayEmailError);
       }
     } else {
       setDisplayError("Enter the Registered Email and Correct Password ");
+      console.log(displayEmailError);
     }
 
-    const token = await axios.get(import.meta.env.VITE_GET_STUDENT_LOGIN_TOKEN_URL);
+    const token = await axios.get(
+      import.meta.env.VITE_GET_STUDENT_LOGIN_TOKEN_URL
+    );
 
     if (token) {
       Cookies.set("studentLoginToken", token.data);
+    }
+  };
+
+  const validateEmail = (Email) => {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!regex.test(Email)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
+  const validatePassword = (password) => {
+    const regex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+
+    if (!regex.test(password)) {
+      setPasswordError(
+        "Password must be at least 8 characters long, include an uppercase letter, a lowercase letter, a number, and a special character."
+      );
+    } else {
+      setPasswordError("");
     }
   };
 
@@ -72,7 +103,7 @@ const StudentLogin = () => {
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
           <div
             className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
-            style={{ marginTop: "-30%", transform: "scale(1.3)" }}
+            style={{ marginTop: "-30%", transform: "scale(1.3)" }} // Doubles the size
           >
             <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
               <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">

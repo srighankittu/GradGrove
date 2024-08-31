@@ -2,7 +2,6 @@ import express from "express";
 import TeacherLandingSchema from "../Schema/TeacherLandingPage.js";
 
 const TeacherRoute = express.Router();
-
 TeacherRoute.get("/getTeacher", async (req, res) => {
   try {
     const data = await TeacherLandingSchema.find();
@@ -12,7 +11,7 @@ TeacherRoute.get("/getTeacher", async (req, res) => {
       status: 200,
     });
   } catch (err) {
-    console.log(err, "error recieving the details");
+    res.send("error occurred",err)
   }
 });
 export default TeacherRoute;
